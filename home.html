@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AniQuiz | Home</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<main id="app">
+  <section class="screen" style="background-image:url('images/intro.png')">
+    <div class="overlay"></div>
+    <div class="card intro-card">
+      <p class="kicker">Modo história</p>
+      <h1>Bem-vindo ao AniQuiz</h1>
+      <p id="intro-text">Avance pelas perguntas e veja sua pontuação final.</p>
+      <button class="btn btn-start" id="start-btn">Iniciar ▶</button>
+    </div>
+  </section>
+</main>
+<script>
+// Proteção: deve estar logado
+if(!sessionStorage.getItem('aq_logged')){
+  window.location.href = 'login.html';
+}
+const user = sessionStorage.getItem('aq_user') || 'Otaku';
+document.getElementById('intro-text').textContent =
+  `${user}, são 10 perguntas sobre anime. Boa sorte!`;
+
+// Resetar estado do quiz
+sessionStorage.removeItem('aq_index');
+sessionStorage.removeItem('aq_score');
+
+document.getElementById('start-btn').addEventListener('click', ()=>{
+  sessionStorage.setItem('aq_index', '0');
+  sessionStorage.setItem('aq_score', '0');
+  window.location.href = 'quiz1.html';
+});
+</script>
+</body>
+</html>

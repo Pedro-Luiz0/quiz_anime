@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AniQuiz | Resultado</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<main id="app">
+  <section class="screen" style="background-image:url('images/result.jpg')">
+    <div class="overlay"></div>
+    <div class="card result-card">
+      <h1 class="result-title">PARABÉNS POR TERMINAR O QUIZ!</h1>
+      <h2 class="result-sub" id="result-sub">Você acertou 0 questões</h2>
+      <p class="result-badge" id="result-badge"></p>
+
+      <div class="pie-wrap">
+        <svg viewBox="0 0 200 200" class="pie" id="pie"></svg>
+        <div class="pie-legend">
+          <span><i style="background:#f5a85a"></i>Acertos <b id="pct-right">0%</b></span>
+          <span><i style="background:#a78bfa"></i>Erros <b id="pct-wrong">0%</b></span>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-start" id="restart-btn">Jogar novamente ⟲</button>
+        <button class="btn btn-danger" id="logout-btn">Sair ✕</button>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+// Proteção
+if(!sessionStorage.getItem('aq_logged')){
+  window.location.href = 'login.html';
+}
+
+const score = parseInt(sessionStorage.getItem('aq_score') || '0');
+const total = 10;
+const pctR  = Math.round((score / total) * 100);
+const pctW  = 100 - pctR;
+
+document.getElementById('result-sub').textContent =
+  `Você acertou ${score} ${score === 1 ? 'questão' : 'questões'}`;
+
+// Badge de desempenho
+const badge = (() => {
+  if(score === 10) return '🏆 Pontuação perfeita! Você é um verdadeiro Otaku!';
+  if(score >= 8)  return '🌟 Excelente! Você conhece muito de anime!';
+  if(score >= 6)  return '👍 Bom resultado! Continue assistindo!';
+  if(score >= 4)  return '📺 Continue estudando o universo anime!';
+  return '😅 Hora de maratonar mais animes!';
+})();
+document.getElementById('result-badge').textContent = badge;
+
+document.getElementById('pct-right').textContent = pctR + '%';
+document.getElementById('pct-wrong').textContent = pctW + '%';
+
+// Gráfico de pizza SVG (mesmo código original, preservado)
+function drawPie(pctRight){
+  const svg = document.getElementById('pie');
+  const cx=100, cy=100, r=90;
+  if(pctRight <= 0){
+    svg.innerHTML = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#a78bfa"/>`;
+    return;
+  }
+  if(pctRight >= 100){
+    svg.innerHTML = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#f5a85a"/>`;
+    return;
+  }
+  const angle = (pctRight/100)*2*Math.PI;
+  const x = cx + r*Math.sin(angle);
+  const y = cy - r*Math.cos(angle);
+  const large = pctRight > 50 ? 1 : 0;
+  svg.innerHTML =
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#a78bfa"/>` +
+    `<path d="M ${cx} ${cy} L ${cx} ${cy-r} A ${r} ${r} 0 ${large} 1 ${x} ${y} Z" fill="#f5a85a"/>` +
+    `<text x="125" y="60" font-size="12" fill="#fff" font-weight="700" font-family="Nunito,sans-serif">Acertos ${pctRight}%</text>` +
+    `<text x="15"  y="165" font-size="12" fill="#fff" font-weight="700" font-family="Nunito,sans-serif">Erros ${100-pctRight}%</text>`;
+}
+drawPie(pctR);
+
+document.getElementById('restart-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('aq_index');
+  sessionStorage.removeItem('aq_score');
+  window.location.href = 'home.html';
+});
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  sessionStorage.clear();
+  window.location.href = 'login.html';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AniQuiz | Login</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<main id="app">
+  <section class="screen" style="background-image:url('images/login.webp')">
+    <div class="overlay"></div>
+    <form class="card login-card" id="login-form" autocomplete="off" novalidate>
+      <h1 class="login-title">AniQuiz</h1>
+      <p class="login-sub">Entre para acessar o quiz</p>
+
+      <label>E-mail
+        <input type="email" id="email" required placeholder="seuemail@anime.com" autocomplete="off"/>
+      </label>
+      <span class="error-msg" id="email-error"></span>
+
+      <label>Senha
+        <input type="password" id="password" required placeholder="••••••••" autocomplete="off"/>
+      </label>
+      <span class="error-msg" id="pass-error"></span>
+
+      <button type="submit" class="btn btn-primary">Entrar →</button>
+      <span class="error-msg" id="form-error"></span>
+    </form>
+  </section>
+</main>
+<script>
+// Validação de e-mail
+function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
+
+document.getElementById('login-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const pass  = document.getElementById('password').value.trim();
+  let ok = true;
+
+  document.getElementById('email-error').textContent = '';
+  document.getElementById('pass-error').textContent  = '';
+  document.getElementById('form-error').textContent  = '';
+
+  if(!email){
+    document.getElementById('email-error').textContent = '⚠ Informe seu e-mail.';
+    ok = false;
+  } else if(!validEmail(email)){
+    document.getElementById('email-error').textContent = '⚠ E-mail inválido.';
+    ok = false;
+  }
+  if(!pass){
+    document.getElementById('pass-error').textContent = '⚠ Informe sua senha.';
+    ok = false;
+  } else if(pass.length < 4){
+    document.getElementById('pass-error').textContent = '⚠ Senha deve ter ao menos 4 caracteres.';
+    ok = false;
+  }
+  if(!ok) return;
+
+  // Proteção contra SQL Injection / XSS básica (sanitiza)
+  const safeName = email.split('@')[0].replace(/[<>"'&]/g,'') || 'Otaku';
+  sessionStorage.setItem('aq_user', safeName);
+  sessionStorage.setItem('aq_logged', '1');
+  window.location.href = 'home.html';
+});
+</script>
+</body>
+</html>

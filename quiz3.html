@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AniQuiz | Fase 3 de 3</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<main id="app">
+  <section class="screen" data-screen="quiz">
+    <img id="quiz-bg" class="bg-img" alt=""/>
+    <div class="overlay"></div>
+
+    <!-- Barra de progresso linear -->
+    <div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:3;padding:0 24px;width:100%;max-width:1140px">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="bar-fill" style="width:0%"></div>
+      </div>
+      <p class="progress-bar-label" id="bar-label">8 / 10 questões</p>
+    </div>
+
+    <div class="quiz-layout">
+      <aside class="ring-wrap">
+        <svg viewBox="0 0 180 180" class="ring">
+          <circle class="ring-track" cx="90" cy="90" r="72"/>
+          <circle class="ring-fill" cx="90" cy="90" r="72" id="ring-fill"/>
+        </svg>
+        <div class="ring-label" id="ring-label">0%</div>
+      </aside>
+      <div class="card question-card">
+        <p class="step" id="step">Pergunta 8 de 10</p>
+        <h2 class="question-title" id="question-title"></h2>
+        <div class="options" id="options"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="questions.js"></script>
+<script>
+  // Configuração desta página: questões 8-10 (índices 7,8,9)
+  const PAGE_START = 7;
+  const PAGE_END   = 10;
+  const NEXT_PAGE  = 'resultado.html';
+</script>
+<script src="quiz_engine.js"></script>
+</body>
+</html>
