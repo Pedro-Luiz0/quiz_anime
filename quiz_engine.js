@@ -55,26 +55,47 @@
   function selectOption(i, _btnEl){
     if(locked) return;
     locked = true;
+  
     const absIdx = PAGE_START + pageIndex;
     const q = QUESTIONS[absIdx];
     const all = document.querySelectorAll('.option');
-
+  
     all.forEach((b, idx) => {
       b.disabled = true;
       if(idx === q.answer) b.classList.add('correct');
-      else if(idx === i)   b.classList.add('wrong');
+      else if(idx === i) b.classList.add('wrong');
     });
-
+  
+    // Recupera respostas
+    let respostas = JSON.parse(sessionStorage.getItem('aq_answers')) || [];
+  
+    respostas[absIdx] = {
+      id: absIdx + 1,
+      pergunta: q.q,
+      alternativas: q.options,
+      respostaEscolhida: i,
+      respostaTexto: q.options[i],
+      respostaCorreta: q.answer,
+      respostaCorretaTexto: q.options[q.answer],
+      acertou: i === q.answer
+    };
+  
+    sessionStorage.setItem(
+      'aq_answers',
+      JSON.stringify(respostas)
+    );
+  
+    // Pontuação
     if(i === q.answer) score++;
     sessionStorage.setItem('aq_score', score);
-
+  
     setTimeout(() => {
       pageIndex++;
       globalIndex++;
+  
       sessionStorage.setItem('aq_index', globalIndex);
-
+  
       if(pageIndex >= PAGE_SIZE){
-        // Fim desta página
         window.location.href = NEXT_PAGE;
       } else {
         renderQuestion();
