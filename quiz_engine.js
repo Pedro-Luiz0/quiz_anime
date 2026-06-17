@@ -3,13 +3,13 @@
 
 (function(){
   // Proteção de acesso
-  if(!sessionStorage.getItem('aq_logged')){
+  if(!localStorage.getItem('aq_logged')){
     window.location.href = 'login.html'; return;
   }
 
   let pageIndex = 0; // índice dentro da página (0..PAGE_SIZE-1)
-  let globalIndex = parseInt(sessionStorage.getItem('aq_index') || '0');
-  let score = parseInt(sessionStorage.getItem('aq_score') || '0');
+  let globalIndex = parseInt(localStorage.getItem('aq_index') || '0');
+  let score = parseInt(localStorage.getItem('aq_score') || '0');
   let locked = false;
 
   const PAGE_SIZE = PAGE_END - PAGE_START; // questões nesta página
@@ -67,7 +67,7 @@
     });
   
     // Recupera respostas
-    let respostas = JSON.parse(sessionStorage.getItem('aq_answers')) || [];
+    let respostas = JSON.parse(localStorage.getItem('aq_answers')) || [];
   
     respostas[absIdx] = {
       id: absIdx + 1,
@@ -80,20 +80,20 @@
       acertou: i === q.answer
     };
   
-    sessionStorage.setItem(
+    localStorage.setItem(
       'aq_answers',
       JSON.stringify(respostas)
     );
   
     // Pontuação
     if(i === q.answer) score++;
-    sessionStorage.setItem('aq_score', score);
+    localStorage.setItem('aq_score', score);
   
     setTimeout(() => {
       pageIndex++;
       globalIndex++;
   
-      sessionStorage.setItem('aq_index', globalIndex);
+      localStorage.setItem('aq_index', globalIndex);
   
       if(pageIndex >= PAGE_SIZE){
         window.location.href = NEXT_PAGE;

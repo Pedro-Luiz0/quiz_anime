@@ -32,11 +32,11 @@
 </main>
 <script>
 // Proteção
-if(!sessionStorage.getItem('aq_logged')){
+if(!localStorage.getItem('aq_logged')){
   window.location.href = 'login.html';
 }
 
-const score = parseInt(sessionStorage.getItem('aq_score') || '0');
+const score = parseInt(localStorage.getItem('aq_score') || '0');
 const total = 10;
 const pctR  = Math.round((score / total) * 100);
 const pctW  = 100 - pctR;
@@ -82,13 +82,13 @@ function drawPie(pctRight){
 drawPie(pctR);
 
 document.getElementById('restart-btn').addEventListener('click', () => {
-  sessionStorage.removeItem('aq_index');
-  sessionStorage.removeItem('aq_score');
+  localStorage.removeItem('aq_index');
+  localStorage.removeItem('aq_score');
   window.location.href = 'home.html';
 });
 
 document.getElementById('logout-btn').addEventListener('click', () => {
-  sessionStorage.clear();
+  localStorage.clear();
   window.location.href = 'login.html';
 });
 </script>
