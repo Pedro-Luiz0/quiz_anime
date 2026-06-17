@@ -21,7 +21,7 @@
 <script>
 // Proteção: deve estar logado
 if(!sessionStorage.getItem('aq_logged')){
-  window.location.href = 'login.html';
+  window.location.href = 'https://quiz-anime-two.vercel.app/login.html';
 }
 const user = sessionStorage.getItem('aq_user') || 'Otaku';
 document.getElementById('intro-text').textContent =
