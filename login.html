@@ -29,7 +29,7 @@
     </form>
   </section>
 </main>
-<script>
+<script type="module">
 // Validação de e-mail
 function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
 
@@ -65,5 +65,6 @@ document.getElementById('login-form').addEventListener('submit', function(e){
   window.location.href = 'home.html';
 });
 </script>
+<script src="scriptlogin.js"></script>
 </body>
 </html>

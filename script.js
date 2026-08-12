@@ -149,3 +149,13 @@ document.getElementById('restart-btn').addEventListener('click', ()=>{
   currentIndex=0; score=0;
   showScreen('intro');
 });
+
+let url = 'http://localhost:3000/rota2';
+
+let resp = await fetch(url)
+
+let dados = await resp.json()
+
+alert(dados.msg)
+
+console.log(dados)

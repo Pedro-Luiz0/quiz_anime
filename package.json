@@ -1,0 +1,24 @@
+{
+  "name": "quiz_anime",
+  "version": "1.0.0",
+  "description": "Desenvolver um Quizz com pelo menos 10 questões, isso deve envolver as seguintes páginas e elementos:\r - Criar as questões e o protótipo das telas e validar junto ao professor;\r - 1 página de login;\r - 1 página home ;\r - 3 páginas com as 10 questões, incluindo uma barra de progresso;\r 1 página de resultado.",
+  "main": "questions.js",
+  "scripts": {
+    "start": "nodemon ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pedro-Luiz0/quiz_anime.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pedro-Luiz0/quiz_anime/issues"
+  },
+  "homepage": "https://github.com/Pedro-Luiz0/quiz_anime#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
